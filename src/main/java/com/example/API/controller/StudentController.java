@@ -23,9 +23,8 @@ import com.example.API.entity.Student;
 @RestController
 
 public class StudentController {
-   
     
-
+   
     @Autowired
     public StudentRepository studentrepo;
 
@@ -64,72 +63,31 @@ public ResponseEntity<Object> deleteStudent(@PathVariable String uid) {
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
-@PutMapping(path="/students/{uid}", produces = "application/json")
-public ResponseEntity<Object> updateStudent(@PathVariable String uid, @RequestBody Student updatedStudent) {
-    try {
-        if (!studentrepo.existsById(uid)) {
-            response.setErrorCode("ERR002");
-            response.setData("Student with id " + uid + " not found");
-            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-        }
+// @PutMapping(path="/students/{uid}", produces = "application/json")
+// public ResponseEntity<Object> updateStudent(@PathVariable String uid, @RequestBody Student updatedStudent) {
+//     try {
+//         if (!studentrepo.existsById(uid)) {
+//             response.setErrorCode("ERR002");
+//             response.setData("Student with id " + uid + " not found");
+//             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+//         }
 
-        // Set the UID of the updated student to the provided UID
-        updatedStudent.setUid(uid);
+       
+//         updatedStudent.setUid(uid);
 
-        // Save the updated student record
-        studentrepo.save(updatedStudent);
+//         // Save the updated student record
+//         studentrepo.save(updatedStudent);
         
-        response.setErrorCode(null);
-        response.setData(updatedStudent);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    } catch (Exception e) {
-        response.setErrorCode("ERR003");
-        response.setData("Error updating student: " + e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-}
-@PatchMapping(path="/students/{uid}", produces = "application/json")
-public ResponseEntity<Object> patchStudent(@PathVariable String uid, @RequestBody Map<String, Object> updates) {
-    try {
-        Optional<Student> existingStudentOpt = studentrepo.findById(uid);
-        
-        if (!existingStudentOpt.isPresent()) {
-            response.setErrorCode("ERR002");
-            response.setData("Student with id " + uid + " not found");
-            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-        }
-        
-        Student existingStudent = existingStudentOpt.get();
-        
-        // Update fields with the provided values
-        if (updates.containsKey("classname")) {
-            existingStudent.setClassname((String) updates.get("classname"));
-        }
-        if (updates.containsKey("name")) {
-            existingStudent.setName((String) updates.get("name"));
-        }
-        if (updates.containsKey("Email")) {
-            existingStudent.setEmail((String) updates.get("Email"));
-        }
-        if (updates.containsKey("Contact")) {
-            existingStudent.setContact((String) updates.get("Contact"));
-        }
-        if (updates.containsKey("Batch_No")) {
-            existingStudent.setBatch_No((String) updates.get("Batch_No"));
-        }
+//         response.setErrorCode(null);
+//         response.setData(updatedStudent);
+//         return new ResponseEntity<>(response, HttpStatus.OK);
+//     } catch (Exception e) {
+//         response.setErrorCode("ERR003");
+//         response.setData("Error updating student: " + e.getMessage());
+//         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+//     }
+// }
 
-        // Save the partially updated student record
-        studentrepo.save(existingStudent);
-        
-        response.setErrorCode(null);
-        response.setData(existingStudent);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    } catch (Exception e) {
-        response.setErrorCode("ERR004");
-        response.setData("Error updating student: " + e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-}
 @PostMapping(path="/students",consumes = "application/json", produces = "application/json")
 public ResponseEntity<Object> createStudent(@RequestBody Student newStudent) {
     try {

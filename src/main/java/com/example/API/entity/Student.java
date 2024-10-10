@@ -14,7 +14,7 @@ public class Student {
     private String Contact;
     private String Batch_No;
 
-    // Default constructor (required by Hibernate)
+  
     public Student() {
     }
 
