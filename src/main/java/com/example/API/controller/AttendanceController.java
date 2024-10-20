@@ -1,5 +1,6 @@
 package com.example.API.controller;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,29 +25,39 @@ public class AttendanceController {
     @Autowired
     public ResponseBean response;
 
+
+    private static final Logger logger = LoggerFactory.getLogger(AttendanceController.class);
+
     @GetMapping(path = "/attendances", produces = "application/json")
     public ResponseEntity<Object> getAttendances() {
+        logger.info("Fetching all attendances");
         List<Attendance> attendanceList = attendanceRepo.findAll();
         response.setData(attendanceList);
+        logger.debug("Attendance data: " + attendanceList);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping(path = "/attendances/{uid}", produces = "application/json")
 public ResponseEntity<Object> getAttendanceByUid(@PathVariable String uid) {
+    logger.info("Fetching attendance for UID: " + uid);
     try {
         Optional<Attendance> attendance = attendanceRepo.findById(uid);
         if (attendance.isPresent()) {
-            response.setErrorCode(null);  // Resetting error code for successful response
+            response.setErrorCode(null);  
             response.setData(attendance.get());
+            logger.debug("Attendance data for UID " + uid + ": " + attendance.get());
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             response.setErrorCode("Attendance record not found");
-            response.setData(null);  // Clearing data in case of error
+           
+            response.setData(null);  
+            logger.warn("Attendance record not found for UID: " + uid);
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     } catch (Exception e) {
-        // Catching any unexpected exceptions
-        response.setErrorCode("ERR500");  // General error code for internal server error
+       
+        logger.error("Error fetching attendance for UID: " + uid + ": " + e.getMessage());
+        response.setErrorCode("ERR500");  
         response.setData("An error occurred while retrieving attendance: " + e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -54,20 +65,24 @@ public ResponseEntity<Object> getAttendanceByUid(@PathVariable String uid) {
 
 @DeleteMapping(path = "/attendances/{uid}")
 public ResponseEntity<Object> deleteAttendance(@PathVariable String uid) {
+    logger.info("Deleting attendance for UID: " + uid);
     try {
         if (attendanceRepo.existsById(uid)) {
             attendanceRepo.deleteById(uid);
-            response.setErrorCode(null);  // Resetting error code for successful response
+            response.setErrorCode(null);  
+           
             response.setData("Attendance record with UID " + uid + " deleted successfully");
+            logger.info("Deleted attendance for UID: " + uid);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             response.setErrorCode("Attendance record not found");
-            response.setData(null);  // Clearing data in case of error
+            response.setData(null);  
+            logger.warn("Attendance record not found for UID: " + uid);
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     } catch (Exception e) {
-        // Catching any unexpected exceptions
-        response.setErrorCode("ERR500");  // General error code for internal server error
+        logger.error("Error deleting attendance for UID: " + uid + ": " + e.getMessage());
+        response.setErrorCode("ERR500"); 
         response.setData("An error occurred while deleting attendance: " + e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }

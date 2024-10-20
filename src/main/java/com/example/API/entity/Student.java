@@ -12,14 +12,14 @@ public class Student {
     private String name;
     private String Email;
     private String Contact;
-    private String Batch_No;
+    private Integer Batch_No;
 
   
     public Student() {
     }
 
     // Parameterized constructor (optional)
-    public Student(String uid, String classname, String name, String email, String contact, String batch_No) {
+    public Student(String uid, String classname, String name, String email, String contact, Integer batch_No) {
         this.uid = uid;
         this.classname = classname;
         this.name = name;
@@ -69,11 +69,11 @@ public class Student {
         this.Contact = contact;
     }
 
-    public String getBatch_No() {
+    public Integer getBatch_No() {
         return Batch_No;
     }
 
-    public void setBatch_No(String batch_No) {
+    public void setBatch_No(Integer batch_No) {
         this.Batch_No = batch_No;
     }
 }
