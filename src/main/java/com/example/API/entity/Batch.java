@@ -1,9 +1,10 @@
 package com.example.API.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "batch") // Ensure this matches your database table name
 public class Batch {
 
     @Id
@@ -11,14 +12,16 @@ public class Batch {
     private String branch;
     private String venue;
     private String created_by;
-    private String created_date;
+
+    // Use LocalDateTime for date fields
+    private LocalDateTime created_date;
     private String modified_by;
-    private String modified_date;
+    private LocalDateTime modified_date;
 
     public Batch() {
     }
 
-    public Batch(int batch_no, String branch, String venue, String created_by, String created_date, String modified_by, String modified_date) {
+    public Batch(int batch_no, String branch, String venue, String created_by, LocalDateTime created_date, String modified_by, LocalDateTime modified_date) {
         this.batch_no = batch_no;
         this.branch = branch;
         this.venue = venue;
@@ -61,11 +64,11 @@ public class Batch {
         this.created_by = created_by;
     }
 
-    public String getCreated_date() {
+    public LocalDateTime getCreated_date() {
         return created_date;
     }
 
-    public void setCreated_date(String created_date) {
+    public void setCreated_date(LocalDateTime created_date) {
         this.created_date = created_date;
     }
 
@@ -77,12 +80,11 @@ public class Batch {
         this.modified_by = modified_by;
     }
 
-    public String getModified_date() {
+    public LocalDateTime getModified_date() {
         return modified_date;
     }
 
-    public void setModified_date(String modified_date) {
+    public void setModified_date(LocalDateTime modified_date) {
         this.modified_date = modified_date;
     }
 }
-

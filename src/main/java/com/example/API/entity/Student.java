@@ -18,7 +18,7 @@ public class Student {
     public Student() {
     }
 
-    // Parameterized constructor (optional)
+   
     public Student(String uid, String classname, String name, String email, String contact, Integer batch_No) {
         this.uid = uid;
         this.classname = classname;

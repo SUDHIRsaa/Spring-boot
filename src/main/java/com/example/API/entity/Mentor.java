@@ -13,23 +13,17 @@ public class Mentor {
     private String email;
     private String department;
     private String created_by;
-    private String created_date;
-    private String modified_by;
-    private String modified_date;
 
     public Mentor() {
     }
 
-    public Mentor(String mentor_id, String name, String contact, String email, String department, String created_by, String created_date, String modified_by, String modified_date) {
+    public Mentor(String mentor_id, String name, String contact, String email, String department, String created_by) {
         this.mentor_id = mentor_id;
         this.name = name;
         this.contact = contact;
         this.email = email;
         this.department = department;
         this.created_by = created_by;
-        this.created_date = created_date;
-        this.modified_by = modified_by;
-        this.modified_date = modified_date;
     }
 
     // Getters and setters
@@ -79,29 +73,5 @@ public class Mentor {
 
     public void setCreated_by(String created_by) {
         this.created_by = created_by;
-    }
-
-    public String getCreated_date() {
-        return created_date;
-    }
-
-    public void setCreated_date(String created_date) {
-        this.created_date = created_date;
-    }
-
-    public String getModified_by() {
-        return modified_by;
-    }
-
-    public void setModified_by(String modified_by) {
-        this.modified_by = modified_by;
-    }
-
-    public String getModified_date() {
-        return modified_date;
-    }
-
-    public void setModified_date(String modified_date) {
-        this.modified_date = modified_date;
     }
 }
